@@ -94,7 +94,7 @@ class _LoginState extends State<Login> {
         padding: EdgeInsets.all(10.sp),
         child: Text(
           textAlign: TextAlign.center,
-          "Welcome to Moohub!\nLogged in successfuly...",
+          "Welcome to Moohub!\nLogged in successfuly.",
           style: TextStyle(fontSize: 12.sp),
         ),
       ),

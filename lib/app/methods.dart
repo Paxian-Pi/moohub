@@ -1,7 +1,6 @@
 import 'package:animated_widgets/widgets/scale_animated.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -43,7 +42,7 @@ Future signIn(LoginRequestModel requestModel) async {
     final response = await _dio.post(authUrl, data: requestModel);
 
     return response.data;
-  } on DioError catch (e) {
+  } on DioException catch (e) {
     // debugPrint(e.response.toString());
     return e.response.toString();
   }
@@ -59,7 +58,7 @@ Future signUp(SignupRequestModel requestModel) async {
     final response = await _dio.post(authUrl, data: requestModel);
 
     return response.data;
-  } on DioError catch (e) {
+  } on DioException catch (e) {
     // debugPrint(e.response.toString());
     return e.response.toString();
   }

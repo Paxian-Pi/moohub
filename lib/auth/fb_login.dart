@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 
-class FacebookLlogin extends StatefulWidget {
-  const FacebookLlogin({Key? key}) : super(key: key);
+class FacebookLogin extends StatefulWidget {
+  const FacebookLogin({Key? key}) : super(key: key);
 
   @override
-  State<FacebookLlogin> createState() => _FacebookLloginState();
+  State<FacebookLogin> createState() => _FacebookLoginState();
 }
 
-class _FacebookLloginState extends State<FacebookLlogin> {
+class _FacebookLoginState extends State<FacebookLogin> {
   Map<String, dynamic>? _userData;
   AccessToken? _accessToken;
   bool? _checking = true;
@@ -16,16 +16,12 @@ class _FacebookLloginState extends State<FacebookLlogin> {
   _ifUserIsLoggedIn() async {
     final accessToken = await FacebookAuth.instance.accessToken;
 
-    setState(() {
-      _checking = false;
-    });
+    setState(() => _checking = false);
 
     if (accessToken != null) {
       final userData = await FacebookAuth.instance.getUserData();
       _accessToken = accessToken;
-      setState(() {
-        _userData = userData;
-      });
+      setState(() => _userData = userData);
     } else {
       _login();
     }
@@ -39,8 +35,8 @@ class _FacebookLloginState extends State<FacebookLlogin> {
       final userInfo = await FacebookAuth.instance.getUserData();
       _userData = userInfo;
     } else {
-      print('ResultStatus: ${loginResult.status}');
-      print('Message: ${loginResult.message}');
+      debugPrint('ResultStatus: ${loginResult.status}');
+      debugPrint('Message: ${loginResult.message}');
     }
   }
 
@@ -55,45 +51,46 @@ class _FacebookLloginState extends State<FacebookLlogin> {
     super.initState();
     _ifUserIsLoggedIn();
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: _checking!
-            ? const Center(
-                child: CircularProgressIndicator(),
-              )
-            : Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const Text('Welcome'),
-                    _userData != null
-                        ? Text(
-                            '${_userData!['name']}',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 28),
-                          )
-                        : Container(),
-                    // _userData != null
-                    //     ? Container(
-                    //         child: Image.network(
-                    //             _userData!\['picture'\]['data']['url']),
-                    //       )
-                    //     : Container(),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    ElevatedButton(
-                      onPressed: () {
-                        _logOut();
-                        Navigator.pop(context);
-                      },
-                      child: const Text('Log Out'),
-                    ),
-                  ],
-                ),
-              ),);
+      body: _checking!
+          ? const Center(
+              child: CircularProgressIndicator(),
+            )
+          : Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const Text('Welcome'),
+                  _userData != null
+                      ? Text(
+                          '${_userData!['name']}',
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 28),
+                        )
+                      : Container(),
+                  // _userData != null
+                  //     ? Container(
+                  //         child: Image.network(
+                  //             _userData!\['picture']['data']['url']),
+                  //       )
+                  //     : Container(),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      _logOut();
+                      Navigator.pop(context);
+                    },
+                    child: const Text('Log Out'),
+                  ),
+                ],
+              ),
+            ),
+    );
   }
 }
