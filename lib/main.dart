@@ -19,19 +19,6 @@ class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
-  // Widget build(BuildContext context) {
-  //   return Sizer(builder: (context, orientation, deviceType) {
-  //     return GetMaterialApp(
-  //       debugShowCheckedModeBanner: false,
-  //       title: 'Cignifi',
-  //       theme: ThemeData(
-  //         primarySwatch: Colors.green,
-  //       ),
-  //       home: const Login(),
-  //     );
-  //   });
-  // }
-
   Widget build(BuildContext context) {
     return Sizer(builder: (context, orientation, deviceType) {
       return GetMaterialApp(

@@ -48,7 +48,6 @@ dependencies:
   google_sign_in: ^6.1.4
   firebase_core: ^2.10.0
   firebase_auth: ^4.4.2
-  twitter_login: ^4.4.0
 
 dev_dependencies:
   flutter_test:
