@@ -431,7 +431,11 @@ class _LoginState extends State<Login> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               InkWell(
-                onTap: () => signInWithGoogle(context: context),
+                onTap: () => signInWithGoogle(context: context).then((value) {
+                  debugPrint("$value");
+                  showFullScreenDialog(
+                      context: context, widget: _succesWidget());
+                }),
                 child: Container(
                   decoration: BoxDecoration(
                     border: Border.all(
@@ -457,7 +461,11 @@ class _LoginState extends State<Login> {
                 ),
               ),
               InkWell(
-                onTap: () => signInWithFacebook(),
+                onTap: () => signInWithFacebook().then((value) {
+                  debugPrint("$value");
+                  showFullScreenDialog(
+                      context: context, widget: _succesWidget());
+                }),
                 child: Container(
                   decoration: BoxDecoration(
                     border: Border.all(

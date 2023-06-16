@@ -104,6 +104,7 @@ Future<User?> signInWithGoogle({required BuildContext context}) async {
           await auth.signInWithCredential(credential);
 
       user = userCredential.user;
+      showFullScreenDialog(context: context, widget: widget)
     } on FirebaseAuthException catch (e) {
       if (e.code == 'account-exists-with-different-credential') {
         // handle the error here
