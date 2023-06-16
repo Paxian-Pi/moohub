@@ -34,7 +34,7 @@ class _SignupState extends State<Signup> {
   @override
   void initState() {
     super.initState();
-    
+
     appState.isSignUpScreen.value = true;
 
     _emailFocusNode = FocusNode();
@@ -532,7 +532,11 @@ class _SignupState extends State<Signup> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               InkWell(
-                onTap: () => signInWithGoogle(context: context),
+                onTap: () => signInWithGoogle(context: context).then((value) {
+                  debugPrint("$value");
+                  showFullScreenDialog(
+                      context: context, widget: _succesWidget());
+                }),
                 child: Container(
                   decoration: BoxDecoration(
                     border: Border.all(
@@ -558,7 +562,11 @@ class _SignupState extends State<Signup> {
                 ),
               ),
               InkWell(
-                onTap: () => signInWithFacebook(),
+                onTap: () => signInWithFacebook().then((value) {
+                  debugPrint("$value");
+                  showFullScreenDialog(
+                      context: context, widget: _succesWidget());
+                }),
                 child: Container(
                   decoration: BoxDecoration(
                     border: Border.all(
