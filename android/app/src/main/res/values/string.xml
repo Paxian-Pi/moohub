@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Moohub</string>
+    <string name="facebook_app_id">653142880004855</string>
+    <string name="fb_login_protocol_scheme">fb653142880004855</string>
+    <string name="facebook_client_token">bf0e7667e9609c1cbfe797c9a43f01c7</string>
+</resources>

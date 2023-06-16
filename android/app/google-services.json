@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "28380517193",
+    "project_id": "moohub-8437b",
+    "storage_bucket": "moohub-8437b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:28380517193:android:a7c750c80122056b30c098",
+        "android_client_info": {
+          "package_name": "com.io.moohub_mobile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "28380517193-3rj8vvfmhesta7qq254ee781t9fgodn1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.io.moohub_mobile",
+            "certificate_hash": "40876ac22282211fc8b24871c9904cd1534ff32c"
+          }
+        },
+        {
+          "client_id": "28380517193-l6hgqhg1gqao640uitf3asrsgpuffp6b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAnKfVeQg2icN9BaU6DLGoYG8GOk5YFz88"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "28380517193-l6hgqhg1gqao640uitf3asrsgpuffp6b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
