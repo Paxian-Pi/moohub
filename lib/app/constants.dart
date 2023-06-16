@@ -1,16 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
-const isLoggedIn = 'isLoggedIn';
-const isFirstTime = 'isFirstTime';
-const isSignupCompleted = 'isSignupCompleted';
-const isVerificationCompleted = 'isVerificationCompleted';
-
-const stopTimer = 'stopTimer';
-
-const userId = 'userId';
-const email = 'email';
-
 const baseUrl = 'https://api.backend.gentro.io/mobile/';
 
 const kPrimaryColor = Color(0xFF6191D8);
