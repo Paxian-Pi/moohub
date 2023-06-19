@@ -71,30 +71,34 @@ class _LoginState extends State<Login> {
       email: _emailController.text,
       password: _passwordController.text,
     )).then((value) async {
-      // debugPrint('${value['body']['data']}');
+      debugPrint('$value');
 
-      showFullScreenDialog(context: context, widget: _succesWidget());
+      if (value['success'] == true) {
+        showFullScreenDialog(
+            context: context,
+            widget: _succesWidget(
+                message: "Welcome to Moohub!\nLogged in successfully."));
+      }
+
       setState(() => _showSpinnar = false);
     }).catchError((err) {
       debugPrint('$err');
 
-      showSnackbar(
-        title: 'Login error...',
-        message: '$err',
-        tittleColor: Colors.black,
-        snackDuration: const Duration(seconds: 5),
-      );
+      showFullScreenDialog(
+          context: context,
+          widget: _succesWidget(message: "Login error...\nUser NOT found!"));
+
       setState(() => _showSpinnar = false);
     });
   }
 
-  Widget _succesWidget() {
+  Widget _succesWidget({required String message}) {
     return Center(
       child: Padding(
         padding: EdgeInsets.all(10.sp),
         child: Text(
           textAlign: TextAlign.center,
-          "Welcome to Moohub!\nLogged in successfuly.",
+          message,
           style: TextStyle(fontSize: 12.sp),
         ),
       ),
@@ -499,6 +503,8 @@ class _LoginState extends State<Login> {
         ),
         TextButton(
           onPressed: () {
+            appState.isSignUpScreen.value = true;
+
             Get.to(
               () => const Signup(),
               duration: const Duration(milliseconds: 400),

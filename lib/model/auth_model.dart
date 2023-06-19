@@ -18,7 +18,7 @@ class SignupRequestModel {
   String email;
   String password;
   String password2;
-  
+
   SignupRequestModel({
     required this.fullname,
     required this.email,
@@ -28,10 +28,10 @@ class SignupRequestModel {
 
   Map<String, dynamic> toJson() {
     final map = {
-      'firstName': fullname.trim(),
-      'lastName': email.trim(),
+      'fullname': fullname.trim(),
+      'email': email.trim(),
       'password': password.trim(),
-      'confirmPassword': password2.trim(),
+      'password2': password2.trim(),
     };
     return map;
   }

@@ -35,8 +35,6 @@ class _SignupState extends State<Signup> {
   void initState() {
     super.initState();
 
-    appState.isSignUpScreen.value = true;
-
     _emailFocusNode = FocusNode();
     _passwordFocusNode = FocusNode();
     _confirmPasswordFocusNode = FocusNode();
@@ -76,30 +74,34 @@ class _SignupState extends State<Signup> {
       password: _passwordController.text,
       password2: _passwordController2.text,
     )).then((value) async {
-      // debugPrint('${value['body']['data']}');
+      debugPrint('$value');
 
-      showFullScreenDialog(context: context, widget: _succesWidget());
+      if (value['error'] != '') {
+        showFullScreenDialog(
+            context: context,
+            widget: _succesWidget(message: "Account created successfully!"));
+      }
+
       setState(() => _showSpinnar = false);
     }).catchError((err) {
       debugPrint('$err');
 
-      showSnackbar(
-        title: 'Signup error...',
-        message: '$err',
-        tittleColor: Colors.black,
-        snackDuration: const Duration(seconds: 5),
-      );
+      showFullScreenDialog(
+          context: context,
+          widget:
+              _succesWidget(message: "Signup error...\nEmail already exists!"));
+
       setState(() => _showSpinnar = false);
     });
   }
 
-  Widget _succesWidget() {
+  Widget _succesWidget({required String message}) {
     return Center(
       child: Padding(
         padding: EdgeInsets.all(10.sp),
         child: Text(
           textAlign: TextAlign.center,
-          "Account created successfuly!",
+          message,
           style: TextStyle(fontSize: 12.sp),
         ),
       ),

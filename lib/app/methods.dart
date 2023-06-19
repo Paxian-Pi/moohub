@@ -1,6 +1,7 @@
 import 'package:animated_widgets/widgets/scale_animated.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -13,22 +14,6 @@ import 'package:moohub_mobile/model/auth_model.dart';
 import 'package:sizer/sizer.dart';
 
 final appState = Get.put(AppState(), permanent: true);
-
-Future<void> toastAlert(
-    {Color? bgColor,
-    Color? msgColor,
-    ToastGravity? gravity,
-    required String message}) {
-  return Fluttertoast.showToast(
-    msg: message,
-    toastLength: Toast.LENGTH_SHORT,
-    gravity: gravity ?? ToastGravity.BOTTOM,
-    timeInSecForIosWeb: 1,
-    backgroundColor: bgColor ?? Colors.transparent,
-    textColor: msgColor ?? Colors.black,
-    fontSize: 12.sp,
-  );
-}
 
 final Dio _dio = Dio();
 
@@ -66,10 +51,12 @@ Future signUp(SignupRequestModel requestModel) async {
 
 Future<UserCredential> signInWithFacebook() async {
   FirebaseAuth auth = FirebaseAuth.instance;
+  User? user;
 
   // Trigger the sign-in flow
   final LoginResult loginResult = await FacebookAuth.instance
       .login(permissions: ['public_profile', 'email']);
+
   if (loginResult.status == LoginStatus.success) {
     debugPrint("Successful login");
   }
@@ -78,8 +65,14 @@ Future<UserCredential> signInWithFacebook() async {
   final OAuthCredential facebookAuthCredential =
       FacebookAuthProvider.credential(loginResult.accessToken!.token);
 
+  final UserCredential userCredential =
+      await auth.signInWithCredential(facebookAuthCredential);
+
+  user = userCredential.user;
+  debugPrint("$user");
+
   // Once signed in, return the UserCredential
-  return auth.signInWithCredential(facebookAuthCredential);
+  return userCredential;
 }
 
 Future<User?> signInWithGoogle({required BuildContext context}) async {
@@ -104,12 +97,14 @@ Future<User?> signInWithGoogle({required BuildContext context}) async {
           await auth.signInWithCredential(credential);
 
       user = userCredential.user;
+      appState.isUser.value = true;
+      debugPrint("$user");
     } on FirebaseAuthException catch (e) {
       if (e.code == 'account-exists-with-different-credential') {
         // handle the error here
         toastAlert(
             bgColor: Colors.black,
-            message: 'Duplicate account: ${e.code}',
+            message: 'duplicate account: ${e.code}',
             msgColor: Colors.white,
             gravity: ToastGravity.CENTER);
       } else if (e.code == 'invalid-credential') {
@@ -124,13 +119,42 @@ Future<User?> signInWithGoogle({required BuildContext context}) async {
       // handle the error here
       toastAlert(
           bgColor: Colors.black,
-          message: 'Somthing went wrong...',
+          message: 'Something went wrong... ${e.toString()}',
           msgColor: Colors.white,
           gravity: ToastGravity.CENTER);
     }
   }
 
   return user;
+}
+
+Future<void> signOut({required BuildContext context}) async {
+  final GoogleSignIn googleSignIn = GoogleSignIn();
+
+  try {
+    if (!kIsWeb) {
+      await googleSignIn.signOut();
+    }
+    await FirebaseAuth.instance.signOut();
+  } catch (e) {
+    showSnackbar(title: "Error", message: "Error signing out...");
+  }
+}
+
+Future<void> toastAlert(
+    {Color? bgColor,
+    Color? msgColor,
+    ToastGravity? gravity,
+    required String message}) {
+  return Fluttertoast.showToast(
+    msg: message,
+    toastLength: Toast.LENGTH_SHORT,
+    gravity: gravity ?? ToastGravity.BOTTOM,
+    timeInSecForIosWeb: 1,
+    backgroundColor: bgColor ?? Colors.transparent,
+    textColor: msgColor ?? Colors.black,
+    fontSize: 12.sp,
+  );
 }
 
 void showSnackbar({
